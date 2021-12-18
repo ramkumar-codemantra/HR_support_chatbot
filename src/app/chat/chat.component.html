@@ -1,0 +1,41 @@
+<div class="container">
+  <h3 class=" text-center">AutoBot HR Support</h3>
+  <div class="messaging">
+    <div class="inbox_msg">
+      <div class="mesgs">
+        <div class="msg_history" #target (scroll)="onScroll($event)" [scrollTop]="target.scrollHeight">
+          <div *ngFor="let item of listVal">
+            <div class="incoming_msg" *ngIf="item.type == 'bot'">
+              <div class="received_msg">
+                <div class="received_withd_msg">
+                  <p *ngIf="item.data != 'question' && item.data != 'ask'">{{item.data}}</p>
+                  <p id="qlist" *ngIf="item.data == 'question'">
+                    <span *ngFor="let q of item.qlist" (click)="setAnswer(q.question)">{{q.question}}</span>
+                  </p>
+                  <p *ngIf="item.data == 'ask'">
+                    Do you want to continue the session?<br>
+                    <span id="ask_span" (click)="closeChat()">No</span> &nbsp;
+                    <span id="ask_span" (click)="addQuestions()">Yes</span>
+                  </p>
+                  <span class="time_date">{{item.date}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="outgoing_msg" *ngIf="item.type == 'user'">
+              <div class="sent_msg">
+                <p>{{item.data}}</p>
+                <span class="time_date">{{item.date}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="type_msg">
+          <div class="input_msg_write">
+            <input type="text" class="write_msg" placeholder="Type a message" [(ngModel)]="userInputVal" />
+            <button class="msg_send_btn" type="button" (click)="sendMsg()"><i class="far fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
